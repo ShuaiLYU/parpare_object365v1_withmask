@@ -68,20 +68,7 @@ python tools/generate_sam_masks.py \
   --batch
 ```
 
-**Optional:** You can also process other datasets (e.g., Flickr30k, GQA) by adjusting the paths:
 
-```bash
-# For Flickr30k
-python tools/generate_sam_masks.py \
-  --img-path ../datasets/flickr/full_images/ \
-  --json-path ../datasets/flickr/annotations/final_flickr_separateGT_train.json 
-
-
-# For GQA (mixed grounding)
-python tools/generate_sam_masks.py \
-  --img-path ../datasets/mixed_grounding/gqa/images \
-  --json-path ../datasets/mixed_grounding/annotations/final_mixed_train_no_coco.json
-```
 
 ### 5. Convert to YOLO Format Labels
 
