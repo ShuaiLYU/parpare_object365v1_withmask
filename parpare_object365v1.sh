@@ -295,7 +295,7 @@ echo "────────────────────────�
 echo "🗃️  Processing Objects365 Dataset..."
 echo "────────────────────────────────────────────────────────────────────────" 
 # Step 1: Download Objects365 dataset from OpenXLab
-if [ ! -d ./datasets/Objects365v1/ ]; then
+if [ ! -d ../datasets/Objects365v1/ ]; then
     echo "📥 Downloading Objects365 dataset from OpenXLab..."
     
     pip install openxlab          # Install OpenXLab CLI
@@ -309,10 +309,10 @@ if [ ! -d ./datasets/Objects365v1/ ]; then
     openxlab login --ak $OPENXLAB_AK --sk $OPENXLAB_SK
     
     # Download dataset
-    openxlab dataset get --dataset-repo OpenDataLab/Objects365_v1 --target-path ./datasets
+    openxlab dataset get --dataset-repo OpenDataLab/Objects365_v1 --target-path ../datasets
 
     # Rename downloaded directory
-    mv ./datasets/OpenDataLab___Objects365_v1 ./datasets/Objects365v1
+    mv ../datasets/OpenDataLab___Objects365_v1 ../datasets/Objects365v1
     echo "✅ Objects365 dataset downloaded successfully"
 else
     echo "✅ Objects365v1 dataset already exists, skipping download."
@@ -321,14 +321,14 @@ fi
 echo "────────────────────────────────────────────────────────────────────────"
 
 # Step 2: Extract Objects365 raw data
-if [ ! -d ./datasets/Objects365v1/raw/Objects365_v1 ]; then
+if [ ! -d ../datasets/Objects365v1/raw/Objects365_v1 ]; then
     echo "📦 Extracting Objects365_v1 raw data..."
-    mkdir -p ./datasets/Objects365v1/raw
-    if [ -f ./datasets/Objects365v1/raw/Objects365_v1.tar.gz ]; then
-        tar -xzf ./datasets/Objects365v1/raw/Objects365_v1.tar.gz -C ./datasets/Objects365v1/raw/
+    mkdir -p ../datasets/Objects365v1/raw
+    if [ -f ../datasets/Objects365v1/raw/Objects365_v1.tar.gz ]; then
+        tar -xzf ../datasets/Objects365v1/raw/Objects365_v1.tar.gz -C ../datasets/Objects365v1/raw/
         echo "✅ Extraction complete."
     else
-        echo "❌ Error: Objects365_v1.tar.gz not found in ./datasets/Objects365v1/raw/"
+        echo "❌ Error: Objects365_v1.tar.gz not found in ../datasets/Objects365v1/raw/"
         exit 1
     fi
 else
@@ -338,24 +338,24 @@ fi
 echo "────────────────────────────────────────────────────────────────────────"
 
 # Step 3: Setup annotations directory and copy base annotations
-mkdir -p ./datasets/Objects365v1/annotations 
-if [ -f ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/objects365_train.json ]; then
-    cp ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/objects365_train.json ./datasets/Objects365v1/annotations/
+mkdir -p ../datasets/Objects365v1/annotations 
+if [ -f ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/objects365_train.json ]; then
+    cp ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/objects365_train.json ../datasets/Objects365v1/annotations/
     echo "✅ Copied base Objects365 annotations"
 fi
 
 echo "────────────────────────────────────────────────────────────────────────"
 
 # Step 4: Extract training images
-if [ ! -d ./datasets/Objects365v1/images/train ]; then
+if [ ! -d ../datasets/Objects365v1/images/train ]; then
     echo "📦 Extracting Objects365_v1 training images..."
-    mkdir -p ./datasets/Objects365v1/images/train
-    for part in ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/train_part*.zip; do
+    mkdir -p ../datasets/Objects365v1/images/train
+    for part in ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/train_part*.zip; do
         if [ -f "$part" ]; then
             echo "📦 Extracting $(basename "$part")..."
-            unzip -q "$part" -d ./datasets/Objects365v1/images/
+            unzip -q "$part" -d ../datasets/Objects365v1/images/
         else
-            echo "⚠️  Warning: No train_part*.zip files found in ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02"
+            echo "⚠️  Warning: No train_part*.zip files found in ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02"
             break
         fi
     done
@@ -372,15 +372,15 @@ echo "────────────────────────�
 #===============================================================================
 
 # step 5: Extract validation images
-# ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip
-if [ ! -d ./datasets/Objects365v1/images/val ]; then
+# ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip
+if [ ! -d ../datasets/Objects365v1/images/val ]; then
     echo "📦 Extracting Objects365_v1 validation images..."
-    mkdir -p ./datasets/Objects365v1/images/val
-    if [ -f ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip ]; then
-        unzip -q ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip -d ./datasets/Objects365v1/images/
+    mkdir -p ../datasets/Objects365v1/images/val
+    if [ -f ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip ]; then
+        unzip -q ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/val.zip -d ../datasets/Objects365v1/images/
         echo "✅ Extraction of validation images complete."
     else
-        echo "❌ Error: val.zip not found in ./datasets/Objects365v1/raw/Objects365_v1/2019-08-02/"
+        echo "❌ Error: val.zip not found in ../datasets/Objects365v1/raw/Objects365_v1/2019-08-02/"
         exit 1
     fi
 else
@@ -388,8 +388,8 @@ else
 fi
 
 # check how many images are in train and val directories
-train_count=$(find ./datasets/Objects365v1/images/train -type f | wc -l)
-val_count=$(find ./datasets/Objects365v1/images/val -type f | wc -l)
+train_count=$(find ../datasets/Objects365v1/images/train -type f | wc -l)
+val_count=$(find ../datasets/Objects365v1/images/val -type f | wc -l)
 echo "📊 Objects365_v1 dataset contains $train_count training images and $val_count validation images."
 
 
@@ -399,9 +399,9 @@ echo "📊 Objects365_v1 dataset contains $train_count training images and $val_
 
 
 # Step 6: Download train segmentation annotations from HuggingFace
-if [ ! -f ./datasets/Objects365v1/annotations/objects365_train_segm.json ]; then
+if [ ! -f ../datasets/Objects365v1/annotations/objects365_train_segm.json ]; then
     echo "📥 Downloading Objects365 training segmentation annotations..."
-    download_huggingface_mirror "https://huggingface.co/datasets/jameslahm/yoloe/resolve/main/objects365_train_segm.json" "./datasets/Objects365v1/annotations/objects365_train_segm.json"
+    download_huggingface_mirror "https://huggingface.co/datasets/jameslahm/yoloe/resolve/main/objects365_train_segm.json" "../datasets/Objects365v1/annotations/objects365_train_segm.json"
     echo "✅ Objects365 segmentation annotations downloaded"
 else
     echo "✅ Objects365 training segmentation annotations already exist, skipping download."
