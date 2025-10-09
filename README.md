@@ -64,7 +64,7 @@ Use the mask generation script to process images and annotations:
 python tools/generate_sam_masks.py \
   --img-path ../datasets/Objects365v1/images/val \
   --json-path ../datasets/Objects365v1/annotations/objects365_val.json \
-  --gpus 0 \
+  --gpus 0,1,2,3 \
   --batch
 ```
 
